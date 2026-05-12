@@ -31,3 +31,20 @@ public:
         cout << "Push value: " << value << endl;
         return value;
     }
+
+    // pop operation: Remove the topmost element from the stack
+    void pop() {
+        if (isEmpty()) {
+            cout << "Stack is empty." << endl;
+            return;
+        }
+
+        Node *temp = top;
+        top = top->next;
+        // Menampilkan data yang baru saja menjadi top setelah pop
+        // Catatan: Logika pada gambar menunjukkan top->data, bukan temp->data
+        cout << "Popped value: " << top->data << endl; 
+        delete temp;
+    }
+
+ 
