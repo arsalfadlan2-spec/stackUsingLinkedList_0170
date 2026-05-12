@@ -2,7 +2,6 @@
 
 using namespace std;
 
-// Node class representing a single node in the linked list
 class Node {
 public:
     int data;
@@ -13,26 +12,23 @@ public:
     }
 };
 
-// Stack class
-class stack {
+class Stack { // Menggunakan huruf kapital 'S' untuk membedakan dengan objek
 private:
-    Node *top; // pointer to the top node of the stack
+    Node *top;
 
 public:
-    stack() {
+    Stack() {
         top = NULL;
     }
 
-    int push(int value) {
+    void push(int value) {
         Node *newNode = new Node();
         newNode->data = value;
         newNode->next = top;
         top = newNode;
         cout << "Push value: " << value << endl;
-        return value;
     }
 
-    // pop operation: Remove the topmost element from the stack
     void pop() {
         if (isEmpty()) {
             cout << "Stack is empty." << endl;
@@ -40,20 +36,19 @@ public:
         }
 
         Node *temp = top;
-        int poppedValue = temp->data; // Simpan data sebelum dihapus
+        int poppedValue = temp->data;
         top = top->next;
         
         cout << "Popped value: " << poppedValue << endl;
-        delete temp; // Menghapus node dari memori
+        delete temp;
     }
 
-    // peek/display operation: Retrieve values without removing
     void peek() {
-        if (top == NULL) {
+        if (isEmpty()) {
             cout << "Stack is empty." << endl;
         } else {
             Node *current = top;
-            cout << "Current Stack (top to bottom): ";
+            cout << "Current Stack: ";
             while (current != NULL) {
                 cout << current->data << " ";
                 current = current->next;
@@ -62,45 +57,46 @@ public:
         }
     }
 
-    // isEmpty operation: check if the stack is empty
     bool isEmpty() {
         return top == NULL; 
     }
 };
 
 int main() {
-    stack myStack; // Hindari menamai objek sama dengan nama class (case-sensitive)
-    
+    Stack myStack;
     int choice = 0;
     int value;
 
-    while (choice != 4) { // Berubah ke 4 sesuai menu Exit
+    while (choice != 4) {
         cout << "--- Menu Stack ---" << endl;
         cout << "1. Push\n2. Pop\n3. Peek/Display\n4. Exit\n";
         cout << "Enter your choice: ";
-        cin >> choice;
+        if (!(cin >> choice)) { // Validasi jika input bukan angka
+            cin.clear();
+            while (cin.get() != '\n');
+            continue;
+        }
 
         switch (choice) {
-        case 1:
-            cout << "Enter the value to push: ";
-            cin >> value;
-            myStack.push(value);
-            break;
-        case 2:
-            myStack.pop();
-            break;
-        case 3:
-            myStack.peek();
-            break;
-        case 4:
-            cout << "Exiting program." << endl;
-            break;
-        default:
-            cout << "Invalid choice. Try again." << endl;
-            break;
+            case 1:
+                cout << "Enter the value to push: ";
+                cin >> value;
+                myStack.push(value);
+                break;
+            case 2:
+                myStack.pop();
+                break;
+            case 3:
+                myStack.peek();
+                break;
+            case 4:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Try again." << endl;
+                break;
         }
         cout << endl;
     }
     return 0;
-} 
-// End of the programm
+}
