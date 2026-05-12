@@ -2,101 +2,132 @@
 
 using namespace std;
 
-class Node {
-public:
+//node class representating a single node in the linked list
+class Node
+{
+    public:
     int data;
     Node *next;
 
-    Node() {
+    Node()
+    {
         next = NULL;
     }
 };
 
-class Stack { // Menggunakan huruf kapital 'S' untuk membedakan dengan objek
+//Stack class
+class stack
+{
 private:
-    Node *top;
+    Node *top; //pointer to the top node of the stack
 
-public:
-    Stack() {
-        top = NULL;
-    }
-
-    void push(int value) {
-        Node *newNode = new Node();
-        newNode->data = value;
-        newNode->next = top;
-        top = newNode;
-        cout << "Push value: " << value << endl;
-    }
-
-    void pop() {
-        if (isEmpty()) {
-            cout << "Stack is empty." << endl;
-            return;
+    public:
+        stack()
+        {
+            top = NULL;
+        }
+        int push(int value)
+        {
+            Node *newNode = new Node();
+            newNode->data = value;
+            newNode->next = top;
+            top = newNode;
+            cout << "Push value: " << value << endl;
+            return value;
         }
 
-        Node *temp = top;
-        int poppedValue = temp->data;
-        top = top->next;
-        
-        cout << "Popped value: " << poppedValue << endl;
-        delete temp;
-    }
-
-    void peek() {
-        if (isEmpty()) {
-            cout << "Stack is empty." << endl;
-        } else {
-            Node *current = top;
-            cout << "Current Stack: ";
-            while (current != NULL) {
-                cout << current->data << " ";
-                current = current->next;
+        // pop operation: Remove the topmost element from the stack
+        void pop()
+         {
+            if (isEmpty())
+            {
+                cout << "Stack is empty." << endl;
             }
-            cout << endl;
-        }
-    }
 
-    bool isEmpty() {
-        return top == NULL; 
+            Node *temp = top;
+            top = top->next;
+            cout << "Popped value: " << top->data << endl;
+        }
+
+        // peek/top operation: Retrive the value of the topset element witchout removing
+        void peek()
+        {
+            if (top == NULL)
+            {
+                cout << "List is empty." << endl;
+            }
+            else
+            {
+                Node *current = top;
+                while (current != NULL)
+                {
+                    cout << current->data << " " << endl;
+                    current = current->next;
+                }
+                cout << endl;
+
+            } // return the value of the top node
+        }
+
+    // isEmpty operation: check of the stack is empty
+    bool isEmpty()
+    {
+    return top == NULL; // Return true if the top pointer is null, indicating am e
     }
 };
 
-int main() {
-    Stack myStack;
+int main()
+{
+    stack stack;
+    
     int choice = 0;
     int value;
 
-    while (choice != 4) {
-        cout << "--- Menu Stack ---" << endl;
-        cout << "1. Push\n2. Pop\n3. Peek/Display\n4. Exit\n";
+    while (choice != 5)
+    {
+        cout << "1.push\n";
+        cout << "2.pop\n";
+        cout << "3.peek\n";
+        cout << "4.Exit\n";
         cout << "Enter your choice: ";
-        if (!(cin >> choice)) { // Validasi jika input bukan angka
-            cin.clear();
-            while (cin.get() != '\n');
-            continue;
+        cin >> choice;
+
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter the value to push: ";
+            cin >> value;
+            stack.push(value); // push the entered value onto the stack
+            break;
+        case 2:
+            if (!stack.isEmpty())
+            {
+                stack.pop(); // pop the top element from the stack
+            }
+            else
+            {
+                cout << "Stack is empty. Cannot pop." << endl;
+            }
+            break;
+         case 3:
+            if (!stack.isEmpty())
+            {
+                stack.peek(); // get the value of the top element
+            }
+            else
+            {
+                cout << "Stack is empty.No top value." << endl;
+            }
+            break;
+        case 4:
+            cout << "Exiting program." << endl;
+            break;
+        default:
+            cout << "invalid choice. Try again." << endl;
+            break;
         }
 
-        switch (choice) {
-            case 1:
-                cout << "Enter the value to push: ";
-                cin >> value;
-                myStack.push(value);
-                break;
-            case 2:
-                myStack.pop();
-                break;
-            case 3:
-                myStack.peek();
-                break;
-            case 4:
-                cout << "Exiting program." << endl;
-                break;
-            default:
-                cout << "Invalid choice. Try again." << endl;
-                break;
-        }
         cout << endl;
     }
     return 0;
-}
+};
